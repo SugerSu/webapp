@@ -1,7 +1,6 @@
 package com.haoxuan.demo.MySQL;
 
-import com.haoxuan.demo.Entity.Userinfo;
-import com.sun.corba.se.impl.orb.PrefixParserAction;
+import com.haoxuan.demo.Entity.UserTable;
 
 import java.sql.*;
 
@@ -20,46 +19,68 @@ public class DB {
         return instance;
     }
     //add a new user into the userInfo table
-    public boolean addUser(Userinfo info)  {
-        boolean res=false;
+    public boolean addUser(UserTable info)  {
+
         try{
             Connection conn= DriverManager.getConnection(url,userName,password);
-            String sql="INSERT INTO userInfo (email,password,firstName,lastName) VALUES (?,?,?,?)";
+            String sql="INSERT INTO user (firstName,lastName,userName,password,salt,createTime,updateTime) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,info.getEmail());
-            statement.setString(2,info.getPassword());
-            statement.setString(3,info.getFirstName());
-            statement.setString(4,info.getLastName());
+            statement.setString(1,info.getFirstName());
+            statement.setString(2,info.getLastName());
+            statement.setString(3,info.getUserName());
+            statement.setString(4,info.getPassword());
+            statement.setString(5,info.getSalt());
+            statement.setString(6,info.getCreateTime());
+            statement.setString(7,info.getUpdateTime());
 
-            res =statement.execute();
+
+            statement.execute();
             statement.close();
             conn.close();
 
         }catch (SQLException e){
             e.printStackTrace();
-        }finally{
-
+            return false;
         }
-        return res;
+        return true;
+
     }
+
     //query user infomation from the userInfo table by email
-    public Userinfo queryUser(String email){
-        Userinfo info=null;
+    public UserTable queryUser(String email){
+        UserTable info=null;
         try{
             Connection conn= DriverManager.getConnection(url,userName,password);
-            String sql="SELECT * FROM userInfo WHERE  email='"+email+"';";
+            String sql="SELECT * FROM user WHERE  userName='"+email+"';";
 
             System.out.println(sql);
             Statement statement =conn.createStatement();
             ResultSet res=statement.executeQuery(sql);
 
             while(res.next()){
-                String mail=res.getNString("email");
-                String fname=res.getNString("firstName");
-                String lname=res.getNString("lastName");
 
-                info=new Userinfo(fname,lname,mail,"Hiden");
+                //skip the first index  of id
+                String fname=res.getString(2);
+                String lname=res.getString(3);
+
+                String mail=res.getString(4);
+                String password=res.getString(5);
+
+                String salt=res.getString(6);
+                String createTime=res.getString(7);
+                String updateTime=res.getString(8);
+                //System.out.println("fname"+fname+" lname"+lname+" mail"+mail+" password"+password+" salt"+salt+" ctime"+createTime+" utime"+updateTime);
+                info=new UserTable(
+                        fname,
+                        lname,
+                        mail,
+                        password,
+                        createTime,
+                        updateTime,
+                        salt
+                );
             }
+            System.out.println(info.getUserName()+info.getPassword()+info.getFirstName());
             statement.close();
             conn.close();
         }catch (SQLException e){
@@ -71,13 +92,16 @@ public class DB {
     }
 
     //update user information from the userInfo table by email and password
-    public boolean updateUser(Userinfo info){
+    public boolean updateUser(UserTable info){
         int rows=0;
         try{
 
             Connection conn= DriverManager.getConnection(url,userName,password);
-            String sql="UPDATE userInfo SET firstName ='"+info.getFirstName()+"', lastName='"+info.getLastName()
-                    +"' WHERE email = '"+info.getEmail()+"' and password="+info.getPassword()+";";
+
+            String sql="UPDATE user SET firstName ='"+info.getFirstName()
+                    +"', lastName='"+info.getLastName()
+                    +"', updateTime='"+info.getUpdateTime()
+                    +"' WHERE userName = '"+info.getUserName()+"';";
 
             System.out.println(sql);
             Statement statement =conn.createStatement();
@@ -85,13 +109,11 @@ public class DB {
 
             statement.close();
             conn.close();
+            return true;
         }catch (SQLException e){
             e.printStackTrace();
-        }finally{
+            return false;
         }
-
-        if(rows>0) return true;
-        else return false;
 
     }
 }

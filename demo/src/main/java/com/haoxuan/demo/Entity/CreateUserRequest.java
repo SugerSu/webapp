@@ -1,15 +1,15 @@
 package com.haoxuan.demo.Entity;
 
-public class Userinfo {
+public class CreateUserRequest {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    public Userinfo() {
-
+    public CreateUserRequest() {
     }
-    public Userinfo(String firstName, String lastName, String email, String password) {
+
+    public CreateUserRequest(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,5 +47,4 @@ public class Userinfo {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
