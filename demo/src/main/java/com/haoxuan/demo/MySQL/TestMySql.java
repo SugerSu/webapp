@@ -1,7 +1,5 @@
 package com.haoxuan.demo.MySQL;
 
-import com.haoxuan.demo.Entity.Userinfo;
-
 public class TestMySql {
     public static void main(String[] args) throws Exception {
 
