@@ -4,7 +4,9 @@ import com.haoxuan.demo.Entity.UserTable;
 
 import java.sql.*;
 
+
 public class DB {
+
 
     private final String url="jdbc:mysql://localhost:3306/cloud";
     private final String userName="su";
@@ -25,13 +27,13 @@ public class DB {
             Connection conn= DriverManager.getConnection(url,userName,password);
             String sql="INSERT INTO user (firstName,lastName,userName,password,salt,createTime,updateTime) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,info.getFirstName());
-            statement.setString(2,info.getLastName());
-            statement.setString(3,info.getUserName());
+            statement.setString(1,info.getFirst_name());
+            statement.setString(2,info.getLast_name());
+            statement.setString(3,info.getUsername());
             statement.setString(4,info.getPassword());
             statement.setString(5,info.getSalt());
-            statement.setString(6,info.getCreateTime());
-            statement.setString(7,info.getUpdateTime());
+            statement.setString(6,info.getAccount_created());
+            statement.setString(7,info.getAccount_updated());
 
 
             statement.execute();
@@ -47,11 +49,11 @@ public class DB {
     }
 
     //query user infomation from the userInfo table by email
-    public UserTable queryUser(String email){
+    public UserTable queryUser(String username){
         UserTable info=null;
         try{
             Connection conn= DriverManager.getConnection(url,userName,password);
-            String sql="SELECT * FROM user WHERE  userName='"+email+"';";
+            String sql="SELECT * FROM user WHERE  userName='"+username+"';";
 
             System.out.println(sql);
             Statement statement =conn.createStatement();
@@ -60,6 +62,7 @@ public class DB {
             while(res.next()){
 
                 //skip the first index  of id
+                String id=res.getString(1);
                 String fname=res.getString(2);
                 String lname=res.getString(3);
 
@@ -71,6 +74,7 @@ public class DB {
                 String updateTime=res.getString(8);
                 //System.out.println("fname"+fname+" lname"+lname+" mail"+mail+" password"+password+" salt"+salt+" ctime"+createTime+" utime"+updateTime);
                 info=new UserTable(
+                        id,
                         fname,
                         lname,
                         mail,
@@ -80,7 +84,7 @@ public class DB {
                         salt
                 );
             }
-            System.out.println(info.getUserName()+info.getPassword()+info.getFirstName());
+            //System.out.println(info.getUsername()+info.getPassword()+info.getFirst_name());
             statement.close();
             conn.close();
         }catch (SQLException e){
@@ -98,10 +102,11 @@ public class DB {
 
             Connection conn= DriverManager.getConnection(url,userName,password);
 
-            String sql="UPDATE user SET firstName ='"+info.getFirstName()
-                    +"', lastName='"+info.getLastName()
-                    +"', updateTime='"+info.getUpdateTime()
-                    +"' WHERE userName = '"+info.getUserName()+"';";
+            String sql="UPDATE user SET firstName ='"+info.getFirst_name()
+                    +"', lastName='"+info.getLast_name()
+                    +"', password='"+info.getPassword()
+                    +"', updateTime='"+info.getAccount_updated()
+                    +"' WHERE userName = '"+info.getUsername()+"';";
 
             System.out.println(sql);
             Statement statement =conn.createStatement();

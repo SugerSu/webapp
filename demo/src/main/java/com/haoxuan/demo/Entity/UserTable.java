@@ -3,27 +3,38 @@ package com.haoxuan.demo.Entity;
 public class UserTable {
     private String id;
 
-    private String firstName;
-    private String lastName;
+    private String first_name;
+    private String last_name;
 
-    private String userName;
+    private String username;
     private String password;
 
-    private String createTime;
-    private String updateTime;
+    private String account_created;
+    private String account_updated;
 
     private String salt;
 
     public UserTable() {
     }
 
-    public UserTable(String firstName, String lastName, String userName, String password, String createTime, String updateTime, String salt) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
+    public UserTable(String first_name, String last_name, String username, String password, String account_created, String account_updated, String salt) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.username = username;
         this.password = password;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
+        this.account_created = account_created;
+        this.account_updated = account_updated;
+        this.salt = salt;
+    }
+
+    public UserTable(String id, String first_name, String last_name, String username, String password, String account_created, String account_updated, String salt) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.username = username;
+        this.password = password;
+        this.account_created = account_created;
+        this.account_updated = account_updated;
         this.salt = salt;
     }
 
@@ -31,29 +42,32 @@ public class UserTable {
         return id;
     }
 
-
-    public String getFirstName() {
-        return firstName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -64,20 +78,20 @@ public class UserTable {
         this.password = password;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getAccount_created() {
+        return account_created;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setAccount_created(String account_created) {
+        this.account_created = account_created;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getAccount_updated() {
+        return account_updated;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setAccount_updated(String account_updated) {
+        this.account_updated = account_updated;
     }
 
     public String getSalt() {

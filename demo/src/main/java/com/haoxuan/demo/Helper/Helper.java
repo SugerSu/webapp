@@ -1,5 +1,6 @@
 package com.haoxuan.demo.Helper;
 
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,11 +25,16 @@ public class Helper {
 
 
     //Base64 Encoding
-    public String BCrypt(String str,String salt){
-        String encodeBytes = Base64.getEncoder().encodeToString((salt + ":" + str).getBytes());
-        return encodeBytes;
+    public String BEncrypt(String rawPwd,String salt){
+        String encodeStr = Base64.getEncoder().encodeToString((salt+":"+rawPwd).getBytes(StandardCharsets.UTF_8));
+        return encodeStr;
     }
-
+    //Base64 Decoding
+    public String BDecrypt(String encrtpPwd,String salt){
+        String decode =new String(Base64.getDecoder().decode(encrtpPwd),StandardCharsets.UTF_8);
+        int index=decode.indexOf(":");
+        return decode.substring(index+1);
+    }
     public String getDate(){
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd HH:mm:ss");

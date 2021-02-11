@@ -2,46 +2,67 @@ package com.haoxuan.demo.Entity;
 
 public class GetUserResponse {
 
-    private String firstName;
-    private String lastName;
-    private String userName;
+    private String id;
+    private String first_name;
+    private String last_name;
+    private String username;
+    private String account_created;
+    private String account_updated;
 
-    public GetUserResponse(String firstName, String lastName, String userName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
+    public GetUserResponse(String id, String first_name, String last_name, String username, String account_created, String account_updated) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.username = username;
+        this.account_created = account_created;
+        this.account_updated = account_updated;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getId() {
+        return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    @Override
-    public String toString() {
-        return "User Information{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + userName + '\'' +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAccount_created() {
+        return account_created;
+    }
+
+    public void setAccount_created(String account_created) {
+        this.account_created = account_created;
+    }
+
+    public String getAccount_updated() {
+        return account_updated;
+    }
+
+    public void setAccount_updated(String account_updated) {
+        this.account_updated = account_updated;
     }
 }
