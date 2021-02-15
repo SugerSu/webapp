@@ -38,6 +38,12 @@ public class UserController {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return null;
             }
+            //check username as email
+            if(!help.validateUserName(userName)){
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return null;
+            }
+
             //check the user exited or not
             UserTable info = DB.getInstance().queryUser(userName);
             if(info!=null) {
