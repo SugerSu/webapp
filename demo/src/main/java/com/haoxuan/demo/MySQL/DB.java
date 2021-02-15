@@ -3,6 +3,7 @@ package com.haoxuan.demo.MySQL;
 import com.haoxuan.demo.Entity.UserTable;
 
 import java.sql.*;
+import java.util.UUID;
 
 
 public class DB {
@@ -25,17 +26,18 @@ public class DB {
 
         try{
             Connection conn= DriverManager.getConnection(url,userName,password);
-            String sql="INSERT INTO user (firstName,lastName,userName,password,salt,createTime,updateTime) VALUES (?,?,?,?,?,?,?)";
+            String sql="INSERT INTO user (id,firstName,lastName,userName,password,salt,createTime,updateTime) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,info.getFirst_name());
-            statement.setString(2,info.getLast_name());
-            statement.setString(3,info.getUsername());
-            statement.setString(4,info.getPassword());
-            statement.setString(5,info.getSalt());
-            statement.setString(6,info.getAccount_created());
-            statement.setString(7,info.getAccount_updated());
+            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(2,info.getFirst_name());
+            statement.setString(3,info.getLast_name());
+            statement.setString(4,info.getUsername());
+            statement.setString(5,info.getPassword());
+            statement.setString(6,info.getSalt());
+            statement.setString(7,info.getAccount_created());
+            statement.setString(8,info.getAccount_updated());
 
-
+            System.out.println(UUID.randomUUID().toString());
             statement.execute();
             statement.close();
             conn.close();
