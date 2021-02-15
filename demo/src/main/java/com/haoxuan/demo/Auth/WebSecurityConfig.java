@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        System.out.println(NoOpPasswordEncoder.getInstance());
+        //System.out.println(NoOpPasswordEncoder.getInstance());
         return NoOpPasswordEncoder.getInstance();// 使用不使用加密算法保持密码
 
 //        return new BCryptPasswordEncoder();
@@ -40,6 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/hello").permitAll()
                 .antMatchers("/user/getInfo").authenticated()
                 .antMatchers("/user/updateInfo").authenticated()
+                .antMatchers("/book/all").permitAll()
+                .antMatchers("/book/add").authenticated()
+                .antMatchers("/book/queryBookById").authenticated()
+                .antMatchers("/book/deleteBookById").authenticated()
                 //.anyRequest().permitAll() // 没有定义的请求，所有的角色都可以访问（tmp也可以）。
                 .and()
                 .csrf().disable()
