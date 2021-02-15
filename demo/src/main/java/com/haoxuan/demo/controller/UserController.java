@@ -3,8 +3,6 @@ package com.haoxuan.demo.controller;
 import com.haoxuan.demo.Entity.*;
 import com.haoxuan.demo.Helper.Helper;
 import com.haoxuan.demo.MySQL.DB;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
 
-    private Helper help = new Helper();
+    private final Helper  help = new Helper();
 
     @RequestMapping("/hello")
     public String hello(){
@@ -39,7 +37,8 @@ public class UserController {
                 return null;
             }
             //check username as email
-            if(!help.validateUserName(userName)){
+            boolean checkRes =help.validateUserName(userName);
+            if(!checkRes){
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return null;
             }
@@ -91,7 +90,7 @@ public class UserController {
             }
 
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Something Wrong");
             response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
 
@@ -130,7 +129,7 @@ public class UserController {
             return userResponse;
 
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Something Wrong");
             response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }
@@ -168,7 +167,7 @@ public class UserController {
             }
 
 
-            System.out.println(userName);
+            //System.out.println(userName);
             //update user info
             UserTable newInfo = new UserTable();
             newInfo.setFirst_name(user.getFirst_name());
@@ -187,7 +186,7 @@ public class UserController {
 
 
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Something Wrong");
             response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         }
