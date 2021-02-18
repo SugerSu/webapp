@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/updateInfo").authenticated()
                 .antMatchers("/book/all").permitAll()
                 .antMatchers("/book/add").authenticated()
-                .antMatchers("/book/queryBookById").authenticated()
+                //.antMatchers("/book/queryBookById").authenticated()
                 .antMatchers("/book/deleteBookById").authenticated()
                 //.anyRequest().permitAll() // 没有定义的请求，所有的角色都可以访问（tmp也可以）。
                 .and()

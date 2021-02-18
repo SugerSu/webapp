@@ -10,16 +10,6 @@ import java.util.regex.Pattern;
 public class Helper {
 
 
-    //check user name as email
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-    public static boolean validateUserName(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
-    }
-
-
     //Generate 8 length salt
     private final String tokenSet="1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -77,5 +67,20 @@ public class Helper {
         if(nums.size()<=0 || chars.size()<=0) return false;
 
         return true;
+    }
+
+
+    //check user name as email
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    public boolean validateUserName(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
+    }
+
+    //generate uuid
+    public String genUUID(){
+        return UUID.randomUUID().toString();
     }
 }

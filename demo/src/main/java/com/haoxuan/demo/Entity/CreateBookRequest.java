@@ -1,19 +1,12 @@
 package com.haoxuan.demo.Entity;
 
 public class CreateBookRequest {
-    public String id;
+
     public String title;
     public String author;
     public String isbn;
     public String published_date;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

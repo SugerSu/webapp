@@ -62,22 +62,15 @@ public class BookController {
             UserTable info = DB.getInstance().queryUser(userName);
 
             //check required parameters
-            if(book.getId().length()<=0 || book.getAuthor().length()<=0 ||book.getIsbn().length()<=0 ||book.getTitle().length()<=0 ||book.getPublished_date().length()<=0){
+            if(book.getAuthor().length()<=0 ||book.getIsbn().length()<=0 ||book.getTitle().length()<=0 ||book.getPublished_date().length()<=0){
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return null;
             }
 
-            //check book id
-            BookTable checkBookInfo =DB.getInstance().queryBookById(book.getId());
-            //id already exist
-            if(checkBookInfo.getId() != null){
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                return null;
-            }
 
 
             BookTable bookInfo = new BookTable();
-            bookInfo.setId(book.getId());
+            bookInfo.setId(help.genUUID());
             bookInfo.setTitle(book.getTitle());
             bookInfo.setAuthor(book.getAuthor());
             bookInfo.setIsbn(book.getIsbn());
@@ -158,11 +151,26 @@ public class BookController {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
+            //get user info from login
+            String userName = null;
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if(principal instanceof UserDetails) {
+                userName = ((UserDetails)principal).getUsername();
+            }else {
+                userName = principal.toString();
+            }
+            //fist check user info
+            UserTable info = DB.getInstance().queryUser(userName);
 
             BookTable book =DB.getInstance().queryBookById(request.getId());
 
             if(book.getId() == null){
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+            //delete the book only for who created it
+            if(!info.getId().equals(book.getUser_id())){
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
 
